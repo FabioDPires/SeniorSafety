@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "178191737682",
+    "project_id": "seniorsafety-545ed",
+    "storage_bucket": "seniorsafety-545ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178191737682:android:69bdfecd10123ad6a3908b",
+        "android_client_info": {
+          "package_name": "com.example.seniorsafety"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178191737682-k8u3pqvg805p2f73jvdqbs8laiai298t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChFDtCwqbW7yGBVeWhqmJ9OUp3idj4ETk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178191737682-k8u3pqvg805p2f73jvdqbs8laiai298t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
