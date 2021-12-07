@@ -3,7 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/fdpires/Documents/SIMOV/simov_seniorsafety/app/src/main/res/drawable/ic_local_pharmacy_black_24dp.xml" value="0.37083333333333335" />
+        <entry key="..\:/Users/fdpires/Documents/SIMOV/simov_seniorsafety/app/src/main/res/drawable/nav_selector.xml" value="0.37083333333333335" />
+        <entry key="..\:/Users/fdpires/Documents/SIMOV/simov_seniorsafety/app/src/main/res/layout/activity_emergency_contacts.xml" value="0.24818840579710144" />
+        <entry key="..\:/Users/fdpires/Documents/SIMOV/simov_seniorsafety/app/src/main/res/layout/activity_hangman.xml" value="0.33967391304347827" />
         <entry key="..\:/Users/fdpires/Documents/SIMOV/simov_seniorsafety/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Users/fdpires/Documents/SIMOV/simov_seniorsafety/app/src/main/res/layout/activity_main.xml" value="0.26268115942028986" />
+        <entry key="..\:/Users/fdpires/Documents/SIMOV/simov_seniorsafety/app/src/main/res/layout/activity_memory_games.xml" value="0.19739583333333333" />
+        <entry key="..\:/Users/fdpires/Documents/SIMOV/simov_seniorsafety/app/src/main/res/layout/activity_nearby_pharmacies.xml" value="0.24818840579710144" />
+        <entry key="..\:/Users/fdpires/Documents/SIMOV/simov_seniorsafety/app/src/main/res/layout/activity_quick_maths.xml" value="0.17083333333333334" />
+        <entry key="..\:/Users/fdpires/Documents/SIMOV/simov_seniorsafety/app/src/main/res/layout/activity_register.xml" value="0.26268115942028986" />
+        <entry key="..\:/Users/fdpires/Documents/SIMOV/simov_seniorsafety/app/src/main/res/menu/bottom_menu.xml" value="0.3546875" />
+        <entry key="..\:/Users/fdpires/Documents/SIMOV/simov_seniorsafety/app/src/main/res/menu/options_menu.xml" value="0.3546875" />
       </map>
     </option>
   </component>

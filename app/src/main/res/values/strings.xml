@@ -4,4 +4,19 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="password_confirmation">Confirm password</string>
+    <string name="register">Create account</string>
+    <string name="DOB">Date of Birth</string>
+    <string name="sex">Sex</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="phoneNumber">Phone Number +XXX YYYYYYYYY</string>
+    <string name="nearby_pharmacies">Nearby Pharmacies</string>
+    <string name="medication">Medication</string>
+    <string name="memory_games">Memory Games</string>
+    <string name="emergency_contacts">Emergency Contacts</string>
+    <string name="hangman">Hangman</string>
+    <string name="quickMaths">Quick Maths</string>
+    <string name="begin">Begin</string>
 </resources>

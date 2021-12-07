@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuickMathsActivity">
+
+    <Button
+        android:id="@+id/button_startQuickMath"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="109dp"
+        android:layout_marginBottom="250dp"
+        android:backgroundTint="#99EB3B"
+        android:text="@string/begin"
+        android:textColor="@android:color/background_light"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewQuestion" />
+
+    <ProgressBar
+        android:id="@+id/progressBarTime"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="366dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="5dp"
+        android:max="60"
+        android:progress="50"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/textViewTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="100dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="307dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewQuestion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarTime"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/textViewQuestion"
+        android:layout_width="258dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginBottom="5dp"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarTime" />
+
+    <TableLayout
+        android:id="@+id/tableLayout2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewNumberQuestions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewQuestion">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/buttonAnswer0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:height="100dp"
+                android:width="100dp"
+                android:backgroundTint="#82B1FF"
+                android:text=""
+                android:textColor="@android:color/background_light"
+                android:textSize="24sp"
+                android:visibility="invisible"/>
+
+            <Button
+                android:id="@+id/buttonAnswer1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:height="100dp"
+                android:width="100dp"
+                android:backgroundTint="#82B1FF"
+                android:text=""
+                android:textColor="@android:color/background_light"
+                android:textSize="20sp"
+                android:layout_marginLeft="20sp"
+                android:visibility="invisible"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/buttonAnswer2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:height="100dp"
+                android:width="100dp"
+                android:backgroundTint="#82B1FF"
+                android:text=""
+                android:textColor="@android:color/background_light"
+                android:textSize="20sp"
+                android:visibility="invisible"/>
+
+            <Button
+                android:id="@+id/buttonAnswer3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:height="100dp"
+                android:width="100dp"
+                android:backgroundTint="#82B1FF"
+                android:text=""
+                android:textColor="@android:color/background_light"
+                android:textSize="20sp"
+                android:layout_marginLeft="20sp"
+                android:visibility="invisible"/>
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/textViewNumberQuestions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="65dp"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout2"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/textViewScore"
+        android:layout_width="96dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="47dp"
+        android:layout_marginBottom="10dp"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewQuestion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewTime"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarTime"
+        android:visibility="invisible"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

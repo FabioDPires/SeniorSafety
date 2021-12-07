@@ -19,12 +19,12 @@
             android:paddingEnd="30dp">
 
             <Button
-                android:id="@+id/nearbyPharmacies_button"
+                android:id="@+id/hangman_button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:text="@string/nearby_pharmacies"
+                android:text="@string/hangman"
                 android:textAllCaps="false"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -32,42 +32,18 @@
                 />
 
             <Button
-                android:id="@+id/medication_button"
+                android:id="@+id/quickMaths_button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:text="@string/medication"
+                android:text="@string/quickMaths"
                 android:textAllCaps="false"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:color="@color/medication_color"
                 />
 
-            <Button
-                android:id="@+id/memoryGames_button"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:text="@string/memory_games"
-                android:textAllCaps="false"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                />
-
-            <Button
-                android:id="@+id/emergencyContacts_button"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:text="@string/emergency_contacts"
-                android:textAllCaps="false"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:color="@color/emergency_color"
-                />
 
         </LinearLayout>
     </ScrollView>

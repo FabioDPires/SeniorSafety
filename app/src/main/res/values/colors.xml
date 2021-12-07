@@ -11,4 +11,7 @@
     <color name="colorAccent">#9B534E</color>
     <color name="colorPrimaryLight">#fafafa</color>
     <color name="colorItemLight">#FCD03F</color>
+    <color name="pharmacy_color">#197218</color>
+    <color name="medication_color">#215DDF</color>
+    <color name="emergency_color">#F44336</color>
 </resources>
