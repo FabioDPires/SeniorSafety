@@ -10,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -26,16 +25,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.firebaseAuth=FirebaseAuth.getInstance();
-        this.nearbyPharmaciesButton=(Button) findViewById(R.id.nearbyPharmacies_button);
-        this.medicationButton=(Button) findViewById(R.id.medication_button);
-        this.memoryGamesButton=(Button) findViewById(R.id.memoryGames_button);
-        this.emergencyContactsButton=(Button) findViewById(R.id.emergencyContacts_button);
+        this.firebaseAuth = FirebaseAuth.getInstance();
+        System.out.println("Current logged user: " + firebaseAuth.getCurrentUser().getUid());
+        System.out.println("NOME: " + firebaseAuth.getCurrentUser().getDisplayName());
+        System.out.println("PHONE NUMBER" + firebaseAuth.getCurrentUser().getPhoneNumber());
+        this.nearbyPharmaciesButton = (Button) findViewById(R.id.nearbyPharmacies_button);
+        this.medicationButton = (Button) findViewById(R.id.medication_button);
+        this.memoryGamesButton = (Button) findViewById(R.id.memoryGames_button);
+        this.emergencyContactsButton = (Button) findViewById(R.id.emergencyContacts_button);
 
         this.nearbyPharmaciesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent nearbyPharmaciesIntent=new Intent(MainActivity.this,NearbyPharmaciesActivity.class);
+                Intent nearbyPharmaciesIntent = new Intent(MainActivity.this, NearbyPharmaciesActivity.class);
                 startActivity(nearbyPharmaciesIntent);
             }
         });
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         this.medicationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent medicationIntent=new Intent(MainActivity.this,MedicationActivity.class);
+                Intent medicationIntent = new Intent(MainActivity.this, MedicationActivity.class);
                 startActivity(medicationIntent);
             }
         });
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         this.memoryGamesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent memoryGamesIntent=new Intent(MainActivity.this,MemoryGamesActivity.class);
+                Intent memoryGamesIntent = new Intent(MainActivity.this, MemoryGamesActivity.class);
                 startActivity(memoryGamesIntent);
             }
         });
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         this.emergencyContactsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent emergencyContactsIntent=new Intent(MainActivity.this,EmergencyContactsActivity.class);
+                Intent emergencyContactsIntent = new Intent(MainActivity.this, EmergencyContactsActivity.class);
                 startActivity(emergencyContactsIntent);
             }
         });
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_logout:
                 this.firebaseAuth.signOut();
-                Intent loginPageIntent=new Intent(getApplicationContext(),LoginActivity.class);
+                Intent loginPageIntent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(loginPageIntent);
             default:
                 return super.onOptionsItemSelected(item);

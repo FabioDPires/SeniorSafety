@@ -11,23 +11,52 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.seniorsafety.models.SouthWest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class HangmanActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView mTextViewWord;
+    TextView mTextViewWord,tvCategory;
     ImageView hangView;
     Button bA, bB, bC, bD, bE, bF, bG, bH, bI, bJ, bK, bL, bM,
             bN, bO, bP, bQ, bR, bS, bT, bU, bV, bW, bX, bY, bZ;
-    private String secretWord, sticks;
+    private String secretWord, category, sticks;
     private int numberOfTries;
     private char chosenLetter;
+    private List<HangmanWord> wordList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hangman);
+        this.tvCategory=(TextView) findViewById(R.id.textViewCategory);
+        this.wordList = new ArrayList<>();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseReference = database.getReference();
+        mDatabaseReference.child("words").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println("VEIO AQI");
+                wordList.clear();
+                for (DataSnapshot subjectDataSnapshot : dataSnapshot.getChildren()) {
+                    System.out.println("HERE 2");
+                    HangmanWord word = subjectDataSnapshot.getValue(HangmanWord.class);
+                    wordList.add(word);
+                }
+                prepareGame();
+                startGame();
+            }
 
-        this.prepareGame();
-        this.startGame();
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     //implements the behavior of the letter buttons
@@ -105,7 +134,15 @@ public class HangmanActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void startGame() {
-        this.secretWord = "BANANA"; //must be replaced
+        int position;
+        Random rand = new Random();
+        int upperbound = this.wordList.size();
+        position = rand.nextInt(upperbound);
+        HangmanWord hangmanWord = this.wordList.get(position);
+        this.secretWord = hangmanWord.getWord();
+        this.category=hangmanWord.getCategory();
+        this.tvCategory.setText("Category: "+this.category);
+        System.out.println("SECRET WORD IS : " +this.secretWord);
         this.numberOfTries = 6;
         this.sticks = "";
         this.chosenLetter = ' ';
@@ -299,4 +336,5 @@ public class HangmanActivity extends AppCompatActivity implements View.OnClickLi
             return word;
         }
     }
+
 }

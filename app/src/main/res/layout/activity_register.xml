@@ -46,38 +46,6 @@
                 android:datePickerMode="spinner"
                 android:spinnersShown="true"/>
 
-            <RadioGroup
-                android:id="@+id/sexRadio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="8dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/sexRegister"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sex"
-                    android:textSize="20sp" />
-
-                <RadioButton
-                    android:id="@+id/radioOptionMale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/male"
-                    android:textSize="18sp" />
-
-                <RadioButton
-                    android:id="@+id/radioOptionFemale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/female"
-                    android:textSize="18sp" />
-            </RadioGroup>
-
             <EditText
                 android:id="@+id/emailRegister"
                 android:layout_width="match_parent"
