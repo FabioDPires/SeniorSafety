@@ -19,20 +19,19 @@
             android:paddingEnd="30dp">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/gameLogo"
                 android:layout_width="304dp"
                 android:layout_height="158dp"
-                android:src="@drawable/brain"
                 android:layout_marginTop="55dp"
                 android:layout_marginBottom="10dp" />
 
             <Button
-                android:id="@+id/hangman_button"
+                android:id="@+id/playButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:text="@string/hangman"
+                android:text="Play"
                 android:textAllCaps="false"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -40,12 +39,12 @@
                 />
 
             <Button
-                android:id="@+id/quickMaths_button"
+                android:id="@+id/leaderboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:text="@string/quickMaths"
+                android:text="Leaderboard"
                 android:textAllCaps="false"
                 android:textSize="20sp"
                 android:textStyle="bold"

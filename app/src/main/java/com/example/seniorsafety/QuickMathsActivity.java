@@ -12,6 +12,12 @@ import android.widget.TextView;
 
 import com.example.seniorsafety.games.MathQuestion;
 import com.example.seniorsafety.games.QuickMath;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class QuickMathsActivity extends AppCompatActivity {
     private Button startButton, answer0Button, answer1Button, answer2Button, answer3Button;
@@ -62,7 +68,7 @@ public class QuickMathsActivity extends AppCompatActivity {
 
                 tvNumberOfQuestions.setText("Time's out!\n"  +"Correct answers:" +qm.getCorrectAnswers() + "/" + (qm.getTotalAnswers() - 1)
                 +"\n Score:"+qm.getScore());
-
+                updateScore();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -137,5 +143,48 @@ public class QuickMathsActivity extends AppCompatActivity {
         this.answer3Button.setEnabled(true);
 
         this.tvQuestion.setText(this.qm.getCurrentQuestion().getQuestionDescription());
+    }
+
+    private void updateScore() {
+        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+        String userID=firebaseAuth.getCurrentUser().getUid();
+        String userName=firebaseAuth.getCurrentUser().getDisplayName();
+        System.out.println("CUrrent logged user: " + userID);
+        System.out.println("Display name: "+userName);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("quickMathScore");
+        databaseReference.orderByChild("userID").equalTo(userID).addListenerForSingleValueEvent
+                (new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        boolean scoreFound=false;
+                        //if it enters the for cycle it's because there is already a score for that user;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            System.out.println("JA EXISTE");
+                            Score score=snapshot.getValue(Score.class);
+                            if(qm.getScore()>score.getScore()){
+                                databaseReference.child(score.getScoreID()).child("score").setValue(qm.getScore());
+
+                            }
+                            scoreFound=true;
+                        }
+
+                        if(!scoreFound){
+                            System.out.println("NAO EXISTE");
+                            DatabaseReference databaseReferenceAux=database.getReference();
+                            Score score=new Score();
+                            score.setScore(qm.getScore());
+                            score.setUserID(userID);
+                            score.setUserName(userName);
+                            score.setScoreID(databaseReferenceAux.child("quickMathScore").push().getKey());
+                            databaseReferenceAux.child("quickMathScore").child(score.getScoreID()).setValue(score);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
     }
 }

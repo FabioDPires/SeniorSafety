@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SeniorSafety">
         <activity
+            android:name=".GameMenuActivity"
+            android:exported="true" />
+        <activity
             android:name=".QuickMathsActivity"
             android:exported="true" />
         <activity

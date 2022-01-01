@@ -22,16 +22,22 @@ public class MemoryGamesActivity extends AppCompatActivity {
         this.hangmanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent hangManIntent=new Intent(MemoryGamesActivity.this,HangmanActivity.class);
-                startActivity(hangManIntent);
+                //Intent hangManIntent=new Intent(MemoryGamesActivity.this,HangmanActivity.class);
+                Intent gmIntent=new Intent(MemoryGamesActivity.this,GameMenuActivity.class);
+                gmIntent.putExtra("gameMode","hangman");
+                startActivity(gmIntent);
             }
         });
 
         this.quickMathsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent quickMathsIntent=new Intent(MemoryGamesActivity.this,QuickMathsActivity.class);
-                startActivity(quickMathsIntent);
+                //Intent quickMathsIntent=new Intent(MemoryGamesActivity.this,QuickMathsActivity.class);
+                //startActivity(quickMathsIntent);
+                Intent gmIntent=new Intent(MemoryGamesActivity.this,GameMenuActivity.class);
+                gmIntent.putExtra("gameMode","quickMath");
+                startActivity(gmIntent);
+
             }
         });
     }
