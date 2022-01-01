@@ -18,32 +18,39 @@ public class GameMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_menu);
-        String gameMode=getIntent().getStringExtra("gameMode");
-        this.ivGameLogo=(ImageView) findViewById(R.id.gameLogo);
+        String gameMode = getIntent().getStringExtra("gameMode");
+        this.ivGameLogo = (ImageView) findViewById(R.id.gameLogo);
         this.setLogo(gameMode);
-        this.playButton=(Button) findViewById(R.id.playButton);
-        this.leaderboardButton=(Button) findViewById(R.id.leaderboardButton);
+        this.playButton = (Button) findViewById(R.id.playButton);
+        this.leaderboardButton = (Button) findViewById(R.id.leaderboardButton);
 
-        playButton.setOnClickListener(new View.OnClickListener() {
+        this.playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent gameIntent = null;
-                if(gameMode.equals("hangman")){
-                    gameIntent=new Intent(GameMenuActivity.this,HangmanActivity.class);
-                }
-                else if(gameMode.equals("quickMath")){
-                    gameIntent=new Intent(GameMenuActivity.this,QuickMathsActivity.class);
+                if (gameMode.equals("hangman")) {
+                    gameIntent = new Intent(GameMenuActivity.this, HangmanActivity.class);
+                } else if (gameMode.equals("quickMath")) {
+                    gameIntent = new Intent(GameMenuActivity.this, QuickMathsActivity.class);
                 }
                 startActivity(gameIntent);
             }
         });
+
+        this.leaderboardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent leaderboardIntent = new Intent(GameMenuActivity.this, LeaderboardActivity.class);
+                leaderboardIntent.putExtra("gamemode", gameMode);
+                startActivity(leaderboardIntent);
+            }
+        });
     }
 
-    private void setLogo(String gameMode){
-        if(gameMode.equals("hangman")){
+    private void setLogo(String gameMode) {
+        if (gameMode.equals("hangman")) {
             this.ivGameLogo.setImageResource(R.drawable.hangman);
-        }
-        else if(gameMode.equals("quickMath")){
+        } else if (gameMode.equals("quickMath")) {
             this.ivGameLogo.setImageResource(R.drawable.maths);
         }
     }
