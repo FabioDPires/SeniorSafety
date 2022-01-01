@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.seniorsafety.models.SouthWest;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Random;
 
 public class HangmanActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView mTextViewWord,tvCategory;
+    TextView mTextViewWord, tvCategory;
     ImageView hangView;
     Button bA, bB, bC, bD, bE, bF, bG, bH, bI, bJ, bK, bL, bM,
             bN, bO, bP, bQ, bR, bS, bT, bU, bV, bW, bX, bY, bZ;
@@ -35,17 +36,15 @@ public class HangmanActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hangman);
-        this.tvCategory=(TextView) findViewById(R.id.textViewCategory);
+        this.tvCategory = (TextView) findViewById(R.id.textViewCategory);
         this.wordList = new ArrayList<>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseReference = database.getReference();
         mDatabaseReference.child("words").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println("VEIO AQI");
                 wordList.clear();
                 for (DataSnapshot subjectDataSnapshot : dataSnapshot.getChildren()) {
-                    System.out.println("HERE 2");
                     HangmanWord word = subjectDataSnapshot.getValue(HangmanWord.class);
                     wordList.add(word);
                 }
@@ -140,9 +139,9 @@ public class HangmanActivity extends AppCompatActivity implements View.OnClickLi
         position = rand.nextInt(upperbound);
         HangmanWord hangmanWord = this.wordList.get(position);
         this.secretWord = hangmanWord.getWord();
-        this.category=hangmanWord.getCategory();
-        this.tvCategory.setText("Category: "+this.category);
-        System.out.println("SECRET WORD IS : " +this.secretWord);
+        this.category = hangmanWord.getCategory();
+        this.tvCategory.setText("Category: " + this.category);
+        System.out.println("SECRET WORD IS : " + this.secretWord);
         this.numberOfTries = 6;
         this.sticks = "";
         this.chosenLetter = ' ';
@@ -181,7 +180,6 @@ public class HangmanActivity extends AppCompatActivity implements View.OnClickLi
         for (int i = 0; i < this.secretWord.length(); i++) {
             char letterAtPosition = this.secretWord.charAt(i);
             if (this.chosenLetter == letterAtPosition) {
-                System.out.println("ESTA PRESENTE");
                 this.sticks = this.sticks.substring(0, 3 * i + 1) + letterAtPosition + this.sticks.substring(3 * i + 2);
                 right = true;
             }
@@ -298,6 +296,7 @@ public class HangmanActivity extends AppCompatActivity implements View.OnClickLi
 
     private void checkWin() {
         if (this.replaceAll(this.sticks, " ", "").equalsIgnoreCase(this.secretWord)) {
+            this.updateScore();
             this.deactivateButtons();
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
             dialogBuilder.setTitle("YOU WON !")
@@ -337,4 +336,41 @@ public class HangmanActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    private void updateScore() {
+        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+        String userID=firebaseAuth.getCurrentUser().getUid();
+        String userName=firebaseAuth.getCurrentUser().getDisplayName();
+        System.out.println("CUrrent logged user: " + userID);
+        System.out.println("Display name: "+userName);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("hangmanScore");
+        databaseReference.orderByChild("userID").equalTo(userID).addListenerForSingleValueEvent
+                (new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        boolean scoreFound=false;
+                        //if it enters the for cycle it's because there is already a score for that user;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Score score=snapshot.getValue(Score.class);
+                            databaseReference.child(score.getScoreID()).child("score").setValue(score.getScore()+1);
+                            scoreFound=true;
+                        }
+
+                        if(!scoreFound){
+                            DatabaseReference databaseReferenceAux=database.getReference();
+                            Score score=new Score();
+                            score.setScore(1);
+                            score.setUserID(userID);
+                            score.setUserName(userName);
+                            score.setScoreID(databaseReferenceAux.child("hangmanScore").push().getKey());
+                            databaseReferenceAux.child("hangmanScore").child(score.getScoreID()).setValue(score);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+    }
 }
