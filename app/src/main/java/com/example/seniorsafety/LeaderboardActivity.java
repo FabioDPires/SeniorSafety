@@ -29,11 +29,11 @@ public class LeaderboardActivity extends AppCompatActivity {
         rvScores.setLayoutManager(new LinearLayoutManager(this));
         Score score=new Score();
         score.setScoreID("as");
-        score.setScore(22);
+        score.setScore(36);
         scoreList.add(score);
         score=new Score();
         score.setScoreID("assadasddas");
-        score.setScore(221212);
+        score.setScore(92);
         scoreList.add(score);
     }
 }
