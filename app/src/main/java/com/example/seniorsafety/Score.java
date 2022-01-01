@@ -3,7 +3,7 @@ package com.example.seniorsafety;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Score implements Parcelable {
+public class Score implements Parcelable,Comparable<Score> {
     private String scoreID;
     private String userID;
     private String userName;
@@ -76,5 +76,10 @@ public class Score implements Parcelable {
                 ", userName='" + userName + '\'' +
                 ", score='" + score + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Score o) {
+        return this.score-o.getScore();
     }
 }

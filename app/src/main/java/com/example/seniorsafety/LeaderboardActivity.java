@@ -10,6 +10,7 @@ import android.os.Bundle;
 import com.example.seniorsafety.adapters.ScoresAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LeaderboardActivity extends AppCompatActivity {
@@ -35,5 +36,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         score.setScoreID("assadasddas");
         score.setScore(92);
         scoreList.add(score);
+        Collections.sort(scoreList, Collections.reverseOrder());
     }
 }
