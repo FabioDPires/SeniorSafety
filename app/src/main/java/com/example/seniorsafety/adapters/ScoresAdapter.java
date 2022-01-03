@@ -34,11 +34,10 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoresView
 
     @Override
     public void onBindViewHolder(@NonNull ScoresViewHolder holder, int position) {
-        holder.tvUser.setText(scores.get(position).getScoreID());
+        holder.tvUser.setText(scores.get(position).getUserName());
         System.out.println("ID: " + scores.get(position).getScoreID());
-        String scoreString=Integer.toString(scores.get(position).getScore());
+        String scoreString = Integer.toString(scores.get(position).getScore());
         holder.tvScore.setText(scoreString);
-
     }
 
     @Override
@@ -57,3 +56,4 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoresView
         }
     }
 }
+
