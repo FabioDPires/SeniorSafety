@@ -2,8 +2,11 @@ package com.example.seniorsafety;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,9 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.seniorsafety.services.FallDetection;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
     private FirebaseAuth firebaseAuth;
     private Button nearbyPharmaciesButton;
     private Button medicationButton;
@@ -24,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        this.startFallDetectionService();
+        this.checkForSmsPermission();
         this.firebaseAuth = FirebaseAuth.getInstance();
         System.out.println("Current logged user: " + firebaseAuth.getCurrentUser().getUid());
         System.out.println("NOME: " + firebaseAuth.getCurrentUser().getDisplayName());
@@ -84,13 +90,36 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(loginPageIntent);
             default:
                 return super.onOptionsItemSelected(item);
-
         }
-
     }
 
     //left empty on purpose. Prevents to go back to the login page
     @Override
     public void onBackPressed() {
+    }
+
+    private void startFallDetectionService() {
+        System.out.println("VEIO AQUI");
+        Intent serviceIntent = new Intent(this, FallDetection.class);
+        startService(serviceIntent);
+    }
+
+    private void stopFallDetectionService() {
+        Intent serviceIntent = new Intent(this, FallDetection.class);
+        stopService(serviceIntent);
+    }
+
+    private void checkForSmsPermission() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.SEND_SMS) !=
+                PackageManager.PERMISSION_GRANTED) {
+            // Permission not yet granted. Use requestPermissions().
+            // MY_PERMISSIONS_REQUEST_SEND_SMS is an
+            // app-defined int constant. The callback method gets the
+            // result of the request.
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.SEND_SMS},
+                    MY_PERMISSIONS_REQUEST_SEND_SMS);
+        }
     }
 }
