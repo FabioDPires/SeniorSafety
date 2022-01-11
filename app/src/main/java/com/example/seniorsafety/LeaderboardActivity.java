@@ -26,14 +26,21 @@ public class LeaderboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
+<<<<<<< HEAD
         String gameMode = getIntent().getStringExtra("gamemode")+"Score";
+=======
+        String gameMode = getIntent().getStringExtra("gamemode") + "Score";
+>>>>>>> 4c59a39c1221028d961a3f1fb92d96a8b75a6d49
         this.rvScores = (RecyclerView) findViewById(R.id.scoresRecyclerView);
         rvScores.addItemDecoration(new DividerItemDecoration(rvScores.getContext(), DividerItemDecoration.VERTICAL));
         this.scoreList = new ArrayList<>();
         ScoresAdapter scoresAdapter = new ScoresAdapter(this, this.scoreList);
         rvScores.setAdapter(scoresAdapter);
         rvScores.setLayoutManager(new LinearLayoutManager(this));
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4c59a39c1221028d961a3f1fb92d96a8b75a6d49
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseReference = database.getReference();
         mDatabaseReference.child(gameMode).addValueEventListener(new ValueEventListener() {
