@@ -19,30 +19,45 @@
             android:paddingEnd="30dp">
 
             <TextView
-                android:id="@+id/nameContactTV"
-                android:layout_width="304dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:layout_marginBottom="10dp"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:text="Name"/>
-
-            <TextView
-                android:id="@+id/emergencyContactTV"
+                android:id="@+id/editNameTV"
                 android:layout_width="304dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="Contact"/>
+                android:text="Name"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/nameContactET"
+                android:layout_width="304dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:id="@+id/editPhoneTV"
+                android:layout_width="304dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Contact"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+            <EditText
+                android:id="@+id/emergencyContactET"
+                android:layout_width="304dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
 
             <Button
-                android:id="@+id/emergencyContacts_button"
+                android:id="@+id/saveContact_button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="200dp"
-                android:text="Play"
+                android:layout_marginTop="100dp"
+                android:text="Save"
                 android:textAllCaps="false"
                 android:textSize="20sp"
                 android:textStyle="bold"
