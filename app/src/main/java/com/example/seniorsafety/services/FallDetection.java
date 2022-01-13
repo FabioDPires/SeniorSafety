@@ -3,6 +3,7 @@ package com.example.seniorsafety.services;
 import android.Manifest;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -11,6 +12,7 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ public class FallDetection extends Service implements SensorEventListener {
     private Sensor sensor;
     private SensorManager sensorManager;
     private FirebaseAuth firebaseAuth;
+    private SharedPreferences sp;
     private boolean firstTime;
     private long lastFall;
 
@@ -35,6 +38,7 @@ public class FallDetection extends Service implements SensorEventListener {
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         this.firebaseAuth = FirebaseAuth.getInstance();
+        this.sp= PreferenceManager.getDefaultSharedPreferences(this);
         this.firstTime = true;
         this.lastFall = System.currentTimeMillis();
     }
@@ -89,12 +93,20 @@ public class FallDetection extends Service implements SensorEventListener {
         if (checkPermission(Manifest.permission.SEND_SMS)) {
             String username = this.firebaseAuth.getCurrentUser().getDisplayName();
             String sms = "Is it possible that " + username + " fell. Check if everything is ok";
+            String number=sp.getString("emergencyNumber","");
+            System.out.println("Number " +number);
+
+            if(number.equals("")){
+                Toast.makeText(getApplicationContext(), "You don't have a emergency contact. Please add one", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             SmsManager man = SmsManager.getDefault();
-            man.sendTextMessage("+351932835100", null, sms, null, null);
+            man.sendTextMessage(number, null, sms, null, null);
             Toast.makeText(getApplicationContext(), "A possible fall was detected. We sent a message to your emergency contact.", Toast.LENGTH_LONG).show();
 
             Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + "+351932835100"));
+            callIntent.setData(Uri.parse("tel:" + number));
         } else {
             Toast.makeText(getApplicationContext(), "There is no permission to send a text", Toast.LENGTH_LONG).show();
         }
