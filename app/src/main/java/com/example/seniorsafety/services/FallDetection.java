@@ -25,6 +25,8 @@ public class FallDetection extends Service implements SensorEventListener {
     private Sensor sensor;
     private SensorManager sensorManager;
     private FirebaseAuth firebaseAuth;
+    private boolean firstTime;
+    private long lastFall;
 
     @Override
     public void onCreate() {
@@ -32,7 +34,9 @@ public class FallDetection extends Service implements SensorEventListener {
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-        this.firebaseAuth=FirebaseAuth.getInstance();
+        this.firebaseAuth = FirebaseAuth.getInstance();
+        this.firstTime = true;
+        this.lastFall = System.currentTimeMillis();
     }
 
     @Override
@@ -50,17 +54,28 @@ public class FallDetection extends Service implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         double vectorNorm = Math.sqrt((Math.pow(event.values[0], 2) + Math.pow(event.values[1], 2) + Math.pow(event.values[2], 2)));
 
-        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            if( vectorNorm > 25.0){
-                System.out.println("Possible fall");
-                /*Intent emailIntent=new Intent(Intent.ACTION_SEND);
-                emailIntent.putExtra(Intent.EXTRA_EMAIL,"fabiopires1011@gmail.com");
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT,"Possible fall!");
-                emailIntent.putExtra(Intent.EXTRA_TEXT,"Possible fall");*/
-                this.sendSMS();
-
-
-
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            if (vectorNorm > 25.0) {
+                //If it is the first time the accelerometer detects a possible fall
+                //we want it to warn it right away
+                if (firstTime) {
+                    this.firstTime = false;
+                    this.lastFall = System.currentTimeMillis();
+                    System.out.println("Possible fall");
+                    this.sendSMS();
+                }
+                //if a previous detection has been made we need to check if the interval has passed
+                //this way we prevent multiple detections in a small ammount of time
+                else {
+                    if (System.currentTimeMillis() >= (this.lastFall + 1 * 1000 * 60)) { //multiply by 1000 to get milliseconds
+                        System.out.println("TIME PASSED");
+                        this.lastFall = System.currentTimeMillis();
+                        System.out.println("Possible fall");
+                        this.sendSMS();
+                    } else {
+                        System.out.println("TIME NOT PASSED");
+                    }
+                }
             }
         }
     }
@@ -71,23 +86,22 @@ public class FallDetection extends Service implements SensorEventListener {
     }
 
     private void sendSMS() {
-        if(checkPermission(Manifest.permission.SEND_SMS)) {
-            String username=this.firebaseAuth.getCurrentUser().getDisplayName();
-            System.out.println("USER: "+username);
-            String sms="Is it possible that "+username+" fell. Check if everything is ok";
+        if (checkPermission(Manifest.permission.SEND_SMS)) {
+            String username = this.firebaseAuth.getCurrentUser().getDisplayName();
+            String sms = "Is it possible that " + username + " fell. Check if everything is ok";
             SmsManager man = SmsManager.getDefault();
             man.sendTextMessage("+351932835100", null, sms, null, null);
-            Toast.makeText(getApplicationContext(), "SMS enviada.",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "A possible fall was detected. We sent a message to your emergency contact.", Toast.LENGTH_LONG).show();
 
             Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + "+351 932 835 100"));
+            callIntent.setData(Uri.parse("tel:" + "+351932835100"));
         } else {
-            Toast.makeText(getApplicationContext(),"SMS não enviada, por favor tente de novo.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "There is no permission to send a text", Toast.LENGTH_LONG).show();
         }
 
     }
 
-    private boolean checkPermission(String permission){
+    private boolean checkPermission(String permission) {
         int check = ContextCompat.checkSelfPermission(this, permission);
         return (check == PackageManager.PERMISSION_GRANTED);
     }
