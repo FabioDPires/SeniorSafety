@@ -1,8 +1,10 @@
 package com.example.seniorsafety;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -43,18 +45,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NearbyPharmaciesActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class NearbyPharmaciesActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private static final int MY_PERMISSION_CODE = 1000;
     private GoogleMap mMap;
     private double latitude, longitude;
     private Location lastLocation;
     private Marker marker;
-    /*
-    private DatabaseReference mDatabase ;
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseFirestore mFirebaseFirestore;
-    private String userId;
-    private String email;*/
     private GoogleMapsApi mService;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationCallback locationCallback;
@@ -63,27 +59,11 @@ public class NearbyPharmaciesActivity extends AppCompatActivity implements OnMap
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("On create");
         setContentView(R.layout.activity_nearby_pharmacies);
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        /*mDatabase= FirebaseDatabase.getInstance().getReference();
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseFirestore = FirebaseFirestore.getInstance();
-
-        userId = mFirebaseAuth.getCurrentUser().getUid();
-
-        DocumentReference documentReference = mFirebaseFirestore.collection("utilizadores").document(userId);
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-
-                email=documentSnapshot.getString("email");
-            }
-        });*/
-        //getMarkers();
-
 
         // Init service
         mService = RetrofitGoogleMaps.getApi();
@@ -209,6 +189,7 @@ public class NearbyPharmaciesActivity extends AppCompatActivity implements OnMap
                 mMap.setMyLocationEnabled(true);
             }
         }
+        this.mMap.setOnMarkerClickListener(this::onMarkerClick);
     }
 
     private void nearbyPlaces(final String placeType) {
@@ -220,10 +201,7 @@ public class NearbyPharmaciesActivity extends AppCompatActivity implements OnMap
                     @Override
                     public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                         if (response.isSuccessful()) {
-                            System.out.println("Sucesso");
-
                             for (int i = 0; i < response.body().getResults().length; i++) {
-                                System.out.println("ENTRA NO IF");
                                 MarkerOptions markerOptions = new MarkerOptions();
                                 Result googlePlace = response.body().getResults()[i];
                                 double lat = Double.parseDouble(googlePlace.getGeometry().getLocation().getLat());
@@ -234,11 +212,7 @@ public class NearbyPharmaciesActivity extends AppCompatActivity implements OnMap
                                 markerOptions.position(latLng);
                                 markerOptions.title(placeName);
                                 if (placeType.equals("pharmacy")) {
-                                    System.out.println("BEM");
                                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-                                } else {
-                                    System.out.println("CONA");
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                                 }
 
                                 mMap.addMarker(markerOptions);
@@ -263,6 +237,21 @@ public class NearbyPharmaciesActivity extends AppCompatActivity implements OnMap
         builder.append("&key=" + "AIzaSyD3AnYXVJASQNIQQsKnIV3c6XYGw158xqk");
         Log.d("getUrl", builder.toString());
         return builder.toString();
+    }
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+        System.out.println("CLICQUEI NO AMRCADOR");
+        LatLng position= marker.getPosition();;
+        double lat =position.latitude;
+        double lng =position.longitude;
+        Uri gmmIntentUri = Uri.parse("google.navigation:q="+lat+","+lng);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
+        return true;
     }
 
     /*private void getMarkers() {

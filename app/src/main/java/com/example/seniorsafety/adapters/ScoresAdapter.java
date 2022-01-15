@@ -38,6 +38,8 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoresView
         System.out.println("ID: " + scores.get(position).getScoreID());
         String scoreString = Integer.toString(scores.get(position).getScore());
         holder.tvScore.setText(scoreString);
+        String scorePosition=Integer.toString(position+1);
+        holder.tvPos.setText(scorePosition);
     }
 
     @Override
@@ -47,12 +49,13 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoresView
     }
 
     public class ScoresViewHolder extends RecyclerView.ViewHolder {
-        TextView tvUser, tvScore;
+        TextView tvPos,tvUser, tvScore;
 
         public ScoresViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUser = itemView.findViewById(R.id.scoreName);
             tvScore = itemView.findViewById(R.id.scoreValue);
+            tvPos=itemView.findViewById(R.id.scorePosition);
         }
     }
 }
