@@ -1,6 +1,7 @@
 package com.example.seniorsafety;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -39,6 +41,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -194,7 +198,7 @@ public class NearbyPharmaciesActivity extends AppCompatActivity implements OnMap
 
     private void nearbyPlaces(final String placeType) {
         String url = getUrl(latitude, longitude, placeType);
-        System.out.println("URL: "+ url);
+        System.out.println("URL: " + url);
 
         mService.getNearByPlaces(url)
                 .enqueue(new Callback<SearchResponse>() {
@@ -214,7 +218,6 @@ public class NearbyPharmaciesActivity extends AppCompatActivity implements OnMap
                                 if (placeType.equals("pharmacy")) {
                                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
                                 }
-
                                 mMap.addMarker(markerOptions);
                                 mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
                             }
@@ -241,16 +244,34 @@ public class NearbyPharmaciesActivity extends AppCompatActivity implements OnMap
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(NearbyPharmaciesActivity.this);
+        builder.setMessage("Do you want to set the path to this location?")
+                .setTitle(marker.getTitle())
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        LatLng position = marker.getPosition();
+                        ;
+                        double lat = position.latitude;
+                        double lng = position.longitude;
+                        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + lat + "," + lng);
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                            startActivity(mapIntent);
+                        }
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
         System.out.println("CLICQUEI NO AMRCADOR");
-        LatLng position= marker.getPosition();;
-        double lat =position.latitude;
-        double lng =position.longitude;
-        Uri gmmIntentUri = Uri.parse("google.navigation:q="+lat+","+lng);
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(mapIntent);
-        }
+
         return true;
     }
 
