@@ -3,6 +3,7 @@ package com.example.seniorsafety;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -42,6 +43,10 @@ public class MedicationActivity extends AppCompatActivity implements MedicationA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication);
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
         this.medicationRecyclerView = (RecyclerView) findViewById(R.id.medicationRecyclerView);
         this.medicationRecyclerView.addItemDecoration(new DividerItemDecoration(this.medicationRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
         this.medicationList = new ArrayList<>();
@@ -97,15 +102,22 @@ public class MedicationActivity extends AppCompatActivity implements MedicationA
             case R.id.action_add_medication:
                 Intent loginPageIntent = new Intent(getApplicationContext(), AddMedication.class);
                 startActivity(loginPageIntent);
+                return true;
+            case android.R.id.home:
+                Intent menuIntent=new Intent(MedicationActivity.this,MainActivity.class);
+                startActivity(menuIntent);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void deleteMedication(Medication medication) {
-        this.medicationList.remove(medication);
-        this.medicationAdapter.notifyDataSetChanged();
-        this.repo.deleteMedication(medication);
+
+    @Override
+    public void onBackPressed() {
+        Intent menuIntent=new Intent(MedicationActivity.this,MainActivity.class);
+        startActivity(menuIntent);
     }
 
 

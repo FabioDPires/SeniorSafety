@@ -1,5 +1,7 @@
 package com.example.seniorsafety;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SharedMemory;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,6 +24,11 @@ public class EmergencyContactsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_contacts);
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         this.nameTV=findViewById(R.id.nameContactTV);
         this.emergencyNumberTV=findViewById(R.id.emergencyContactTV);
         this.editEmergencyContactButton=findViewById(R.id.emergencyContacts_button);
@@ -46,5 +54,25 @@ public class EmergencyContactsActivity extends AppCompatActivity {
                 startActivity(editContactIntent);
             }
         });
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent menuIntent=new Intent(EmergencyContactsActivity.this,MainActivity.class);
+                startActivity(menuIntent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //left empty on purpose. Prevents to go back to the login page
+    @Override
+    public void onBackPressed() {
+        Intent menuIntent=new Intent(EmergencyContactsActivity.this,MainActivity.class);
+        startActivity(menuIntent);
     }
 }
