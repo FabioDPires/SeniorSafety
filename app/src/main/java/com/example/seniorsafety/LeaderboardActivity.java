@@ -33,6 +33,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         ScoresAdapter scoresAdapter = new ScoresAdapter(this, this.scoreList);
         rvScores.setAdapter(scoresAdapter);
         rvScores.setLayoutManager(new LinearLayoutManager(this));
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseReference = database.getReference();
         mDatabaseReference.child(gameMode).addValueEventListener(new ValueEventListener() {

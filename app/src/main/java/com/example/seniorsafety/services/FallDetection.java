@@ -23,6 +23,8 @@ import androidx.core.content.ContextCompat;
 import com.example.seniorsafety.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.DecimalFormat;
+
 public class FallDetection extends Service implements SensorEventListener {
     private Sensor sensor;
     private SensorManager sensorManager;
@@ -56,10 +58,18 @@ public class FallDetection extends Service implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        double vectorNorm = Math.sqrt((Math.pow(event.values[0], 2) + Math.pow(event.values[1], 2) + Math.pow(event.values[2], 2)));
-
+        //double vectorNorm = Math.sqrt((Math.pow(event.values[0], 2) + Math.pow(event.values[1], 2) + Math.pow(event.values[2], 2)));
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            if (vectorNorm > 25.0) {
+            double loX = event.values[0];
+            double loY = event.values[1];
+            double loZ = event.values[2];
+
+            double loAccelerationReader = Math.sqrt(Math.pow(loX, 2)
+                    + Math.pow(loY, 2)
+                    + Math.pow(loZ, 2));
+
+            if (loAccelerationReader > 0.2d && loAccelerationReader < 0.6) {
+            //if (vectorNorm > 25.0) {
                 //If it is the first time the accelerometer detects a possible fall
                 //we want it to warn it right away
                 if (firstTime) {
@@ -76,11 +86,10 @@ public class FallDetection extends Service implements SensorEventListener {
                         this.lastFall = System.currentTimeMillis();
                         System.out.println("Possible fall");
                         this.sendSMS();
-                    } else {
-                        System.out.println("TIME NOT PASSED");
                     }
                 }
             }
+
         }
     }
 
