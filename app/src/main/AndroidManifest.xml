@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SeniorSafety">
         <activity
+            android:name=".MedicationDetailsActivity"
+            android:exported="true" />
+        <activity
             android:name=".AddMedication"
             android:exported="true" />
         <activity

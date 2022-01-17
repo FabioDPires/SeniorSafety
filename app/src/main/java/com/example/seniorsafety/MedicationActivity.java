@@ -32,7 +32,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-public class MedicationActivity extends AppCompatActivity implements MedicationAdapter.OnMedicationListener, View.OnClickListener {
+public class MedicationActivity extends AppCompatActivity implements MedicationAdapter.OnMedicationListener {
     private RecyclerView medicationRecyclerView;
     private ArrayList<Medication> medicationList;
     private MedicationAdapter medicationAdapter;
@@ -71,18 +71,17 @@ public class MedicationActivity extends AppCompatActivity implements MedicationA
 
     @Override
     public void onMedicationClick(int position) {
-       /* Intent intent = new Intent(getContext(), MedicamentoActivity.class);
-        intent.putExtra("selected_med", mMedicamentos.get(position));
-        startActivity(intent);*/
-        System.out.println("CARREGUJEI NO MEDICAMENTO");
+        Intent intent = new Intent(MedicationActivity.this, MedicationDetailsActivity.class);
+        Medication med=this.medicationList.get(position);
+        System.out.println("MED: "+med.toString());
+        intent.putExtra("medicationName",med.getName());
+        intent.putExtra("medicationQuant",med.getQuantity());
+        intent.putExtra("medicationTime",med.getTime());
+        intent.putExtra("medicationID",med.getId());
+        startActivity(intent);
     }
 
-    @Override
-    public void onClick(View v) {
-        /*Intent intent = new Intent(getContext(), MedicamentoActivity.class);
-        startActivity(intent);*/
-        System.out.println("CARREGUJEI NO MEDICAMENTO  222");
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
