@@ -34,7 +34,6 @@ import java.util.Map;
 public class RegisterActivity extends AppCompatActivity {
     private EditText etPhoneNumber, etName, etEmail, etPassword, etPasswordConfirm;
     private Button registerButton;
-    private DatePicker dob;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
     private String userID;
@@ -51,7 +50,6 @@ public class RegisterActivity extends AppCompatActivity {
         this.etEmail = (EditText) findViewById(R.id.emailRegister);
         this.etPassword = (EditText) findViewById(R.id.passwordRegister);
         this.etPasswordConfirm = (EditText) findViewById(R.id.passwordConfirm);
-        this.dob = (DatePicker) findViewById(R.id.dobPicker);
         this.registerButton = (Button) findViewById(R.id.registerButton);
 
         this.registerButton.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
                 final String passwordConfirm=etPasswordConfirm.getText().toString();
                 final String name=etName.getText().toString();
                 final String phoneNumber=etPhoneNumber.getText().toString().trim();
-                final String stringDOB=getDateFromDatePicker(dob);
                 boolean invalidInfo=false;
 
                 if(TextUtils.isEmpty(name)){

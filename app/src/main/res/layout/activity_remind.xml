@@ -10,7 +10,7 @@
     android:paddingEnd="20dp">
 
     <ImageView
-        android:id="@+id/imageViewPill"
+        android:id="@+id/imageViewPillReming"
         android:layout_width="304dp"
         android:layout_height="158dp"
         android:src="@drawable/pill"
@@ -19,7 +19,7 @@
         android:layout_gravity="center_horizontal"/>
 
     <TextView
-        android:id="@+id/medicationNameDetails"
+        android:id="@+id/medicationNameDetailsRemind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
@@ -29,7 +29,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/medicationQuantityDetails"
+        android:id="@+id/medicationQuantityRemind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
@@ -37,34 +37,15 @@
         android:textSize="20sp"
         android:layout_marginTop="20dp"/>
 
-    <TextView
-        android:id="@+id/medicationTimeDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
-        android:layout_gravity="center_horizontal"
-        android:textSize="20sp"
-        android:layout_marginTop="20dp"/>
-
-
     <Button
-        android:id="@+id/editMedButton"
+        android:id="@+id/confirm_button"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:text="Edit" />
+        android:text="I took the pill!" />
 
-    <Button
-        android:id="@+id/deleteMedButton"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:text="Delete" />
 </LinearLayout>
 

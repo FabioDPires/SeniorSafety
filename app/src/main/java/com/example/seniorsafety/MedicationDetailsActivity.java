@@ -31,10 +31,11 @@ public class MedicationDetailsActivity extends AppCompatActivity {
         this.nameTV=(TextView) findViewById(R.id.medicationNameDetails);
         this.nameTV.setText(name);
         this.quantTV=(TextView) findViewById(R.id.medicationQuantityDetails);
-        this.quantTV.setText(quantAux);
+        this.quantTV.setText("Quantity: "+quantAux);
         this.timeTV=(TextView) findViewById(R.id.medicationTimeDetails);
         this.timeTV.setText(time);
 
+        this.editButton=(Button) findViewById(R.id.editMedButton);
         this.deleteButton=(Button) findViewById(R.id.deleteMedButton);
         this.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +46,19 @@ public class MedicationDetailsActivity extends AppCompatActivity {
                 repo.deleteMedication(med);
                 Intent medicationListIntent=new Intent(MedicationDetailsActivity.this,MedicationActivity.class);
                 startActivity(medicationListIntent);
+            }
+        });
+
+        this.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("MedicationEdited");
+                Intent medicationAddIntent=new Intent(MedicationDetailsActivity.this,AddMedication.class);
+                medicationAddIntent.putExtra("mode","edit");
+                medicationAddIntent.putExtra("currentName",name);
+                medicationAddIntent.putExtra("currentQuant",quant);
+                medicationAddIntent.putExtra("id",id);
+                startActivity(medicationAddIntent);
             }
         });
     }

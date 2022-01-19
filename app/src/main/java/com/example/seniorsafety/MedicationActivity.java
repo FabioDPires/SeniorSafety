@@ -100,8 +100,9 @@ public class MedicationActivity extends AppCompatActivity implements MedicationA
         switch (item.getItemId()) {
 
             case R.id.action_add_medication:
-                Intent loginPageIntent = new Intent(getApplicationContext(), AddMedication.class);
-                startActivity(loginPageIntent);
+                Intent addMedIntent = new Intent(getApplicationContext(), AddMedication.class);
+                addMedIntent.putExtra("mode","add");
+                startActivity(addMedIntent);
                 return true;
             case android.R.id.home:
                 Intent menuIntent=new Intent(MedicationActivity.this,MainActivity.class);

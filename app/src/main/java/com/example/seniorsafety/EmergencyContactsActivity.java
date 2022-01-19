@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SharedMemory;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ public class EmergencyContactsActivity extends AppCompatActivity {
     private TextView emergencyNumberTV;
     private TextView nameTV;
     private Button editEmergencyContactButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,18 +31,19 @@ public class EmergencyContactsActivity extends AppCompatActivity {
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        this.nameTV=findViewById(R.id.nameContactTV);
-        this.emergencyNumberTV=findViewById(R.id.emergencyContactTV);
-        this.editEmergencyContactButton=findViewById(R.id.emergencyContacts_button);
+        this.nameTV = findViewById(R.id.nameContactTV);
+        this.emergencyNumberTV = findViewById(R.id.emergencyContactTV);
+        this.editEmergencyContactButton = findViewById(R.id.emergencyContacts_button);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
-        String emergencyNumber=sp.getString("emergencyNumber","");
-        String emergencyName=sp.getString("emergencyName","");
-        if(emergencyNumber.equals("")){
+        String emergencyNumber = sp.getString("emergencyNumber", "");
+        String emergencyName = sp.getString("emergencyName", "");
+        if (emergencyNumber.equals("")) {
             this.nameTV.setVisibility(View.INVISIBLE);
             this.emergencyNumberTV.setText("No emergency contact defined");
+            this.emergencyNumberTV.setGravity(Gravity.CENTER_HORIZONTAL);
+            this.emergencyNumberTV.setTextSize(30);
             this.editEmergencyContactButton.setText("Add");
-        }
-        else{
+        } else {
             this.nameTV.setText(emergencyName);
             this.emergencyNumberTV.setText(emergencyNumber);
             this.editEmergencyContactButton.setText("Edit");
@@ -48,21 +51,19 @@ public class EmergencyContactsActivity extends AppCompatActivity {
         this.editEmergencyContactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent editContactIntent=new Intent(EmergencyContactsActivity.this,EditEmergencyContactActivity.class);
-                editContactIntent.putExtra("emergencyName",emergencyName);
-                editContactIntent.putExtra("emergencyNumber",emergencyNumber);
+                Intent editContactIntent = new Intent(EmergencyContactsActivity.this, EditEmergencyContactActivity.class);
+                editContactIntent.putExtra("emergencyName", emergencyName);
+                editContactIntent.putExtra("emergencyNumber", emergencyNumber);
                 startActivity(editContactIntent);
             }
         });
-
-
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent menuIntent=new Intent(EmergencyContactsActivity.this,MainActivity.class);
+                Intent menuIntent = new Intent(EmergencyContactsActivity.this, MainActivity.class);
                 startActivity(menuIntent);
                 return true;
         }
@@ -72,7 +73,7 @@ public class EmergencyContactsActivity extends AppCompatActivity {
     //left empty on purpose. Prevents to go back to the login page
     @Override
     public void onBackPressed() {
-        Intent menuIntent=new Intent(EmergencyContactsActivity.this,MainActivity.class);
+        Intent menuIntent = new Intent(EmergencyContactsActivity.this, MainActivity.class);
         startActivity(menuIntent);
     }
 }

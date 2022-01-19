@@ -21,35 +21,24 @@
             android:paddingStart="30dp"
             android:paddingEnd="30dp">
 
+            <ImageView
+                android:id="@+id/imageViewRegister"
+                android:layout_width="304dp"
+                android:layout_height="158dp"
+                android:src="@drawable/logo"
+                android:layout_marginBottom="10dp" />
+
            <EditText
                android:id="@+id/nameRegister"
                android:layout_width="match_parent"
-               android:layout_height="70dp"
-               android:layout_marginTop="20dp"
+               android:layout_height="wrap_content"
                android:hint ="@string/name"
                android:paddingLeft="15dp"
                android:paddingRight="15dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/DOB"
-                android:layout_marginBottom="-50dp"
-                android:layout_marginTop="20dp"/>
-
-
-            <DatePicker
-                android:id="@+id/dobPicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                android:spinnersShown="true"/>
-
             <EditText
                 android:id="@+id/emailRegister"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:autofillHints="email"
                 android:hint="@string/email"
@@ -61,7 +50,7 @@
             <EditText
                 android:id="@+id/phoneNumberRegister"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:inputType="phone"
                 android:hint="@string/phoneNumber"
@@ -72,7 +61,7 @@
             <EditText
                 android:id="@+id/passwordRegister"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:autofillHints="password"
                 android:hint="@string/password"
@@ -84,7 +73,7 @@
             <EditText
                 android:id="@+id/passwordConfirm"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:autofillHints="password"
                 android:hint="@string/password_confirmation"
