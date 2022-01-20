@@ -27,10 +27,6 @@ public class EmergencyContactsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
-<<<<<<< HEAD
-
-=======
->>>>>>> fb8d49e0dcf9ed998d2f5b4960e30f0a179d2c6b
         this.nameTV = findViewById(R.id.nameContactTV);
         this.emergencyNumberTV = findViewById(R.id.emergencyContactTV);
         this.editEmergencyContactButton = findViewById(R.id.emergencyContacts_button);

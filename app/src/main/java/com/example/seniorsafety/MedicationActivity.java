@@ -27,13 +27,13 @@ import com.example.seniorsafety.database.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
-public class MedicationActivity extends AppCompatActivity implements MedicationAdapter.OnMedicationListener {​​​​​​
+public class MedicationActivity extends AppCompatActivity implements MedicationAdapter.OnMedicationListener {
     private RecyclerView medicationRecyclerView;
     private ArrayList<Medication> medicationList;
     private MedicationAdapter medicationAdapter;
     private Repository repo;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {​​​​​​
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication);
         // calling the action bar
@@ -49,25 +49,25 @@ public class MedicationActivity extends AppCompatActivity implements MedicationA
         this.medicationRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.retrieveMedication();
         medicationAdapter.notifyDataSetChanged();
-    }​​​​​​
+    }
 
-    private void retrieveMedication() {​​​​​​
-        this.repo.retrieveMedicationTask().observe(this, new Observer<List<Medication>>() {​​​​​​
+    private void retrieveMedication() {
+        this.repo.retrieveMedicationTask().observe(this, new Observer<List<Medication>>() {
             @Override
-            public void onChanged(@Nullable List<Medication> medication) {​​​​​​
-                if (medicationList.size() > 0) {​​​​​​
+            public void onChanged(@Nullable List<Medication> medication) {
+                if (medicationList.size() > 0) {
                     medicationList.clear();
-                }​​​​​​
-                if (medication != null) {​​​​​​
+                }
+                if (medication != null) {
                     medicationList.addAll(medication);
-                }​​​​​​
+                }
                 medicationAdapter.notifyDataSetChanged();
-            }​​​​​​
-        }​​​​​​);
-    }​​​​​​
+            }
+        });
+    }
 
     @Override
-    public void onMedicationClick(int position) {​​​​​​
+    public void onMedicationClick(int position) {
         Intent intent = new Intent(MedicationActivity.this, MedicationDetailsActivity.class);
         Medication med=this.medicationList.get(position);
         System.out.println("MED: "+med.toString());
@@ -76,20 +76,20 @@ public class MedicationActivity extends AppCompatActivity implements MedicationA
         intent.putExtra("medicationTime",med.getTime());
         intent.putExtra("medicationID",med.getId());
         startActivity(intent);
-    }​​​​​​
+    }
 
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {​​​​​​
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.medication_option_menu, menu);
         return true;
-    }​​​​​​
+    }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {​​​​​​
-        switch (item.getItemId()) {​​​​​​
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
 
             case R.id.action_add_medication:
                 Intent addMedIntent = new Intent(getApplicationContext(), AddMedication.class);
@@ -102,17 +102,17 @@ public class MedicationActivity extends AppCompatActivity implements MedicationA
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }​​​​​​
-    }​​​​​​
+        }
+    }
 
 
     @Override
-    public void onBackPressed() {​​​​​​
+    public void onBackPressed() {
         Intent menuIntent=new Intent(MedicationActivity.this,MainActivity.class);
         startActivity(menuIntent);
-    }​​​​​​
+    }
 
 
-}​​​​​​
+}
 
 

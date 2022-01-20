@@ -21,11 +21,11 @@ public class MedicationReminder {
         mAlarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
     }
 
-    public void setReminder(Medication medication, Calendar when) {
+    public void setReminder(Medication medication, Calendar when,int requestCode) {
         Intent i = new Intent(mContext, MedicationReceiver.class);
         i.putExtra("medName",medication.getName());
         i.putExtra("medQuant",medication.getQuantity());
-        PendingIntent pi=PendingIntent.getBroadcast(mContext,0,i,0);
+        PendingIntent pi=PendingIntent.getBroadcast(mContext,requestCode,i,0);
         mAlarmManager.set(AlarmManager.RTC_WAKEUP,when.getTimeInMillis(),pi);
     }
 }

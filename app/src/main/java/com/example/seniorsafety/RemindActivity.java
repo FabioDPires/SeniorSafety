@@ -61,6 +61,8 @@ public class RemindActivity extends AppCompatActivity {
 
         if (number.equals("")) {
             Toast.makeText(getApplicationContext(), "You don't have a emergency contact. Please add one", Toast.LENGTH_LONG).show();
+            mediaPlayer.stop();
+            finish();
             return;
         }
 
@@ -72,5 +74,6 @@ public class RemindActivity extends AppCompatActivity {
         callIntent.setData(Uri.parse("tel:" + number));
 
         mediaPlayer.stop();
+        finish();
     }
 }
