@@ -1,7 +1,5 @@
 package com.example.seniorsafety;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,19 +7,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
 import com.example.seniorsafety.database.Medication;
 import com.example.seniorsafety.database.Repository;
 import com.example.seniorsafety.managers.MedicationReminder;
-
 import java.util.Calendar;
-
 public class AddMedication extends AppCompatActivity {
     private EditText nameET, quantET;
     private TimePicker tp;
     private Button saveButton;
     private Repository repo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +43,6 @@ public class AddMedication extends AppCompatActivity {
                 String quant = quantET.getText().toString();
                 int quant_aux = 0;
                 boolean validInfo = true;
-
                 if (name.equals("")) {
                     nameET.setError("Medication name can't be empty");
                     validInfo = false;
@@ -78,8 +71,14 @@ public class AddMedication extends AppCompatActivity {
                     int id = getIntent().getIntExtra("id", 0);
                     med.setId(id);
                     repo.updateMedication(med);
-                } else {
                     MedicationReminder mr = new MedicationReminder(getApplicationContext());
+                    Calendar c = Calendar.getInstance();
+                    c.set(Calendar.HOUR_OF_DAY, hour);
+                    c.set(Calendar.MINUTE, min);
+                    c.set(Calendar.SECOND, 0);
+                    mr.updateReminder(med,c,id);
+                } else {
+
                     repo.insertMedication(new Medication(name, quant_aux, time),getApplicationContext(),hour,min);
                 }
                 Intent medicationIntent = new Intent(AddMedication.this, MedicationActivity.class);
